@@ -1,0 +1,523 @@
+﻿<UserControl x:Name="UUC" x:Class="CH03.Dashboard"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:local="clr-namespace:CH03"
+             mc:Ignorable="d" 
+             d:DesignHeight="2680" d:DesignWidth="1200">
+    <UserControl.Resources>
+        <DataTemplate x:Key="dtAgenda">
+
+            <StackPanel Orientation="Horizontal" PreviewMouseLeftButtonDown="listItem_Click"
+                       VerticalAlignment="Stretch" Tag="{Binding MyID}"
+                       HorizontalAlignment="Stretch"
+                       Margin="0,5">
+                <Image Source="{Binding ImageSource}"
+                       Height="50" Width="50" Tag="{Binding MyID}"
+                       VerticalAlignment="Center"
+                       HorizontalAlignment="Center"
+                       RenderOptions.BitmapScalingMode="HighQuality" Margin="0,0,5,0">
+                    <Image.Clip>
+                        <EllipseGeometry
+                         RadiusX="20"
+                         RadiusY="20"
+                         Center="20,20"/>
+                    </Image.Clip>
+                </Image>
+                <StackPanel Orientation="Vertical" PreviewMouseLeftButtonDown="listItem_Click" Tag="{Binding MyID}">
+
+                    <TextBlock Text="{Binding Memid}" Tag="{Binding MyID}"
+                           FontSize="16" FontWeight="DemiBold" 
+                           Foreground="#00303f"
+                           Background="Transparent"
+                           Margin="5,5,0,5"
+                           />
+
+                    <TextBlock Text="{Binding Content}" Tag="{Binding MyID}"
+                           FontSize="12" FontWeight="DemiBold" 
+                           Foreground="#00303f"
+                           Background="Transparent"
+                           
+                           />
+
+
+                </StackPanel>
+
+            </StackPanel>
+
+
+        </DataTemplate>
+    </UserControl.Resources>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="270"/>
+            <ColumnDefinition Width="8*" />
+            <ColumnDefinition Width="4*" />
+        </Grid.ColumnDefinitions>
+        <Grid.Resources>
+            <Style TargetType="materialDesign:PackIcon">
+                <Setter Property="Width" Value="30"></Setter>
+                <Setter Property="Height" Value="30"></Setter>
+            </Style>
+        </Grid.Resources>
+
+        <Grid x:Name="grdList" VerticalAlignment="Stretch"
+              HorizontalAlignment="Stretch"
+              Width="260"
+              Margin="10,50,0,0"
+              Panel.ZIndex="9999"
+              Background="#F7F6F8">
+            <ListView x:Name="lst" 
+                      VerticalAlignment="top" ItemsSource="{Binding myList}"
+                      HorizontalAlignment="Stretch" VirtualizingPanel.VirtualizationMode="Recycling"                  
+                      ScrollViewer.VerticalScrollBarVisibility="Auto" ItemTemplate="{StaticResource dtAgenda}"
+                      ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                <!--<ListView.ItemContainerStyle>
+                    <Style TargetType="ListViewItem">
+                        <EventSetter Event="PreviewMouseLeftButtonDown" Handler="SelectCurrentItemSearch"/>
+                    </Style>
+                </ListView.ItemContainerStyle>-->
+            </ListView>
+        </Grid>
+
+        <ScrollViewer Grid.Column="1">
+
+
+
+
+            <Grid Grid.Column="0" Background="#F7F6F8" ScrollViewer.HorizontalScrollBarVisibility="Disabled" ScrollViewer.VerticalScrollBarVisibility="Visible" UseLayoutRounding="True" HorizontalAlignment="Center" VerticalAlignment="Top" Height="2500" >
+
+
+                <!--for the dock pannel above-->
+
+
+                <StackPanel Orientation="Vertical" Margin="10" >
+                    <Grid Height="60" Width="504">
+                        <Button x:Name="Add_New_Member" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" ToolTip="MaterialDesignFloatingActionMiniButton" Margin="464,10,0,10" Width="40" Height="40" VerticalAlignment="Center" Click="Add_New_Member_Click">
+                            <Button.Background>
+                                <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                                    <GradientStop Color="#FFF59F31"/>
+                                    <GradientStop Color="#FFF8D9A5" Offset="1"/>
+                                </LinearGradientBrush>
+                            </Button.Background>
+                            <materialDesign:PackIcon Kind="AccountMultiplePlus" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" />
+                        </Button>
+
+
+
+                        <!--above dock panel search box -->
+
+                        <TextBox x:Name="srch1" HorizontalAlignment="Left" Height="45" materialDesign:HintAssist.Hint="Search" VerticalAlignment="Top" Width="220" Margin="22,10,0,0" BorderThickness="1" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" FontSize="16" >
+                            <TextBox.Resources>
+                                <Style TargetType="{x:Type Border}">
+                                    <Setter Property="CornerRadius" Value="25"/>
+                                </Style>
+                            </TextBox.Resources>
+                        </TextBox>
+
+
+                        <!--above dock panel search button  -->
+                        <Button x:Name="srch" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" Margin="246,14,218,6" Click="search">
+                            <Button.Background>
+                                <SolidColorBrush Color="#FFFF9800" Opacity="0"/>
+                            </Button.Background>
+                            <materialDesign:PackIcon Kind="Magnify" />
+                        </Button>
+
+
+                        <Grid Margin="201,38,242,0"/>
+
+                    </Grid>
+
+
+                    <StackPanel Width="230"/>
+
+                    <materialDesign:Card Margin="30 20" UniformCornerRadius="20" HorizontalAlignment="Left">
+
+                        <Grid>
+
+                            <!--Members Information-->
+
+                            <Button x:Name="lvmi" Content="List View"  Width="65"  Background="#FFF6F6F8" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Margin="0,20,20,0" Padding="0" HorizontalAlignment="Right" VerticalAlignment="Top" />
+                            <TextBlock  HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Members Information" FontSize="18" Margin="20,20,0,0" Height="30" Width="180" VerticalAlignment="Top"/>
+                            <WrapPanel Orientation="Horizontal" Margin="30,50" VerticalAlignment="Center">
+                                <TextBox x:Name="memno" materialDesign:HintAssist.Hint="Member Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="130" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" KeyDown="memno_KeyDown" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="memnm" materialDesign:HintAssist.Hint="Member Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="250" HorizontalAlignment="Right" Margin="20,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="fsn" materialDesign:HintAssist.Hint="Father's/Spouse Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="180" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="unm" materialDesign:HintAssist.Hint="Union Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="200" Margin="15,10,0,0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Padding="0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <ComboBox x:Name="gndr" materialDesign:HintAssist.Hint="Gender" VerticalAlignment="Bottom" Width="90" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Bottom" Height="43" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" >
+                                    <ComboBoxItem>Male</ComboBoxItem>
+                                    <ComboBoxItem>Female</ComboBoxItem>
+                                </ComboBox>
+                                <DatePicker x:Name="dob" materialDesign:HintAssist.Hint="Date Of Birth" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" VerticalAlignment="Center" Width="110" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" />
+                                <TextBox x:Name="age" materialDesign:HintAssist.Hint="Age" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="60" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  /> 
+                                <ComboBox x:Name="bg" materialDesign:HintAssist.Hint="BloodGroup" VerticalAlignment="Bottom" Width="110" HorizontalContentAlignment="Center" VerticalContentAlignment="Bottom" Height="43" HorizontalAlignment="Center" Margin="10,10,0,0" Padding="4,6,0,6" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" >
+                                    <ComboBoxItem Content="A+"/>
+                                    <ComboBoxItem Content="A-"/>
+                                    <ComboBoxItem Content="B+"/>
+                                    <ComboBoxItem Content="B-"/>
+                                    <ComboBoxItem Content="AB+"/>
+                                    <ComboBoxItem Content="AB-"/>
+                                    <ComboBoxItem Content="O+"/>
+                                    <ComboBoxItem Content="O-"/>
+                                </ComboBox>
+                                <TextBox x:Name="nomnm" materialDesign:HintAssist.Hint="Nominee Name" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="200" Margin="10,10,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="nmage" materialDesign:HintAssist.Hint="N/Age" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="60" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="nomr" materialDesign:HintAssist.Hint="Nominee Relationship" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="120" Margin="10,10,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="ocp" materialDesign:HintAssist.Hint="Occupation" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="150" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="ai" materialDesign:HintAssist.Hint="Annual Income" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="110" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="cmty" materialDesign:HintAssist.Hint="Comunity" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="120" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+
+
+                            </WrapPanel>
+
+                        </Grid>
+
+                    </materialDesign:Card>
+
+
+                    <!--Additional Details-->
+
+
+
+
+                    <materialDesign:Card Margin="30 20" UniformCornerRadius="20" HorizontalAlignment="Center" Width="460">
+                        <StackPanel>
+                            <Grid>
+
+
+
+                                <TextBlock Margin="20" HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Additional Details" FontSize="18" VerticalAlignment="Top"/>
+                                <WrapPanel Orientation="Horizontal" Margin="30 50" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+                                    <TextBox x:Name="exp1" materialDesign:HintAssist.Hint="Portfolio/Experience" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="360" HorizontalAlignment="Center" Margin="10,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Height="120" FontWeight="Bold" Opacity="0.7" />
+                                    <TextBox x:Name="cmts" materialDesign:HintAssist.Hint="Comments" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="360" Margin="10,10,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" BorderThickness="1" Height="120" FontWeight="Bold" Opacity="0.7"  />
+
+                                </WrapPanel>
+
+                            </Grid>
+                        </StackPanel>
+                    </materialDesign:Card>
+
+
+
+
+
+
+                    <!--Contact Information-->
+
+
+
+                    <materialDesign:Card Margin="30 20" UniformCornerRadius="20" HorizontalAlignment="Left" Height="500">
+
+                        <Grid>
+                            <Button x:Name="lvci" Content="List View"  Width="65"  Background="#FFF6F6F8" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Padding="0" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+
+                            <TextBlock Margin="20" HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Contact Information" FontSize="18" VerticalAlignment="Top"/>
+                            <WrapPanel Orientation="Horizontal" Margin="30,38,30,30" VerticalAlignment="Center">
+
+                                <TextBox x:Name="mno"   materialDesign:HintAssist.Hint="Moblie Number"   Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="210"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" />
+                                <TextBox x:Name="pno"   materialDesign:HintAssist.Hint="Phone Number"       Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="210" HorizontalAlignment="Center" Margin="20,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="eadrs" materialDesign:HintAssist.Hint="Email Address"      Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" HorizontalContentAlignment="Center" />
+                                <TextBox x:Name="fadrs" materialDesign:HintAssist.Hint="Full Address"       Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440" TextWrapping="Wrap"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Margin="0,10,0,0" HorizontalContentAlignment="Center" />
+                                <TextBox x:Name="la1"   materialDesign:HintAssist.Hint="Local Address 1" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" Height="45"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="la2"   materialDesign:HintAssist.Hint="Local Address 2" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" Height="44"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="la3"   materialDesign:HintAssist.Hint="Local Address 3" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" Height="44" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+                                <TextBox x:Name="la4"   materialDesign:HintAssist.Hint="Local Address 4" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="440" HorizontalContentAlignment="Center" HorizontalAlignment="Left" Margin="0,10,0,0" Height="44"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                            </WrapPanel>
+
+                        </Grid>
+
+                    </materialDesign:Card>
+
+
+
+                    <!--Identifications-->
+
+
+
+                    <materialDesign:Card Margin="30 20" UniformCornerRadius="20" HorizontalAlignment="Center" Height="230">
+
+                        <Grid>
+
+
+                            <TextBlock Margin="20" HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Identifications" FontSize="18" VerticalAlignment="Top"/>
+                            <WrapPanel Orientation="Horizontal" Margin="30,20,30,0" VerticalAlignment="Center">
+
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+
+                                    </Grid.ColumnDefinitions>
+
+
+                                    <Grid Grid.Column="0">
+                                        <StackPanel Width="235" Margin="0,0,-3,-21">
+                                            <StackPanel Orientation="Horizontal" Margin="0,20" HorizontalAlignment="Center">
+                                                <TextBlock Text="Union Id Card" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14"/>
+                                                <ToggleButton x:Name="unid" Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Union ID Card" Background="#FFFF9800" Width="40" Margin="24,0,0,0" />
+
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,20" HorizontalAlignment="Center">
+                                                <TextBlock Text="Allotment Letter" VerticalAlignment="Center" HorizontalAlignment="Left" Margin="0" FontSize="14"/>
+                                                <ToggleButton x:Name="alotl"  Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Background="#FFFF9800" Width="40" Margin="12,0,0,0" />
+
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </Grid>
+                                    <Grid Grid.Column="1" >
+                                        <StackPanel Width="230" Height="130">
+                                            <StackPanel Orientation="Horizontal" Margin="0,20" HorizontalAlignment="Center">
+
+                                                <TextBlock Text="Union Letter" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14" Margin="-4,0,0,0"/>
+                                                <ToggleButton x:Name="unl" Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Background="#FFFF9800" Width="40" Margin="23,0,0,0" />
+
+                                            </StackPanel>
+
+                                            <StackPanel Orientation="Horizontal" Margin="0,20" HorizontalAlignment="Center">
+
+                                                <TextBlock Text="Society ID" VerticalAlignment="Center" HorizontalAlignment="Left" FontSize="14"/>
+                                                <ToggleButton x:Name="socid" Style="{StaticResource MaterialDesignSwitchToggleButton}" ToolTip="Default ToggleButton Style" Background="#FFFF9800" Width="40" Margin="41,0,0,0" />
+
+                                            </StackPanel>
+
+                                        </StackPanel>
+
+                                    </Grid>
+
+
+                                </Grid>
+
+
+                            </WrapPanel>
+
+                        </Grid>
+
+                    </materialDesign:Card>
+
+
+
+                    <!--Share and Resident Details-->
+
+                    <materialDesign:Card Margin="30 20" UniformCornerRadius="20" HorizontalAlignment="Center" Height="200">
+
+                        <Grid>
+
+
+                            <Button x:Name="lvsrd" Content="List View"  Width="65"  Background="#FFF6F6F8" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Padding="0" Margin="0,20,20,0" RenderTransformOrigin="0.754,-1.375" VerticalAlignment="Top" HorizontalAlignment="Right" />
+
+                            <TextBlock Margin="20" HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Share and Resident Details" FontSize="18" VerticalAlignment="Top"/>
+                            <WrapPanel Orientation="Horizontal" Margin="30,0" VerticalAlignment="Center">
+                                <ComboBox x:Name="sh" materialDesign:HintAssist.Hint="Site/House"  VerticalAlignment="Center" Width="90" Margin="10,10,0,0" Height="43" VerticalContentAlignment="Bottom" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" >
+                                    <ComboBoxItem>
+                                        Yes
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        No
+                                    </ComboBoxItem>
+
+                                </ComboBox>
+                                <DatePicker x:Name="sd" materialDesign:HintAssist.Hint="Share's Date" Style="{StaticResource MaterialDesignFloatingHintDatePicker}" Width="90" HorizontalAlignment="Center" Margin="10,10,0,0"/>
+                                <TextBox x:Name="nsh" materialDesign:HintAssist.Hint="Number of Shares" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="10,10,0,0" Width="90" FontSize="10" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="cps" materialDesign:HintAssist.Hint="Cost per Share" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="90" RenderTransformOrigin="0.5,0.5" Margin="10,10,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}"  />
+
+
+                                <TextBox x:Name="totc" materialDesign:HintAssist.Hint="Total Cost" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="10,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Width="120" />
+                                <TextBox x:Name="altid" materialDesign:HintAssist.Hint="Allotment Number" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="10,10,0,0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Padding="2,0,0,0" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Width="120"  />
+
+
+                                <ComboBox x:Name="bnklc" materialDesign:HintAssist.Hint="BANK Loan/Cash"  VerticalAlignment="Center" Margin="10,10,0,0" Height="43" VerticalContentAlignment="Bottom" IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" Width="120" >
+                                    <ComboBoxItem>
+                                        Loan
+                                    </ComboBoxItem>
+                                    <ComboBoxItem>
+                                        Cash
+                                    </ComboBoxItem>
+
+                                </ComboBox>
+
+
+                            </WrapPanel>
+
+                        </Grid>
+
+                    </materialDesign:Card>
+
+
+
+
+
+                    <!--Flat and Payment Details-->
+
+
+
+
+                    <materialDesign:Card Margin="30,20,30,69" UniformCornerRadius="20" HorizontalAlignment="Center" Height="200">
+
+                        <Grid>
+
+
+                            <Button x:Name="lvfpd" Content="List View"  Width="65"  Background="#FFF6F6F8" Height="20" HorizontalContentAlignment="Center" VerticalContentAlignment="Stretch" Padding="0" Margin="0,20,20,0" VerticalAlignment="Top" HorizontalAlignment="Right" />
+
+                            <TextBlock Margin="20" HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Flat and Payment Details" FontSize="18" VerticalAlignment="Top"/>
+                            <WrapPanel Orientation="Horizontal" Margin="30,0" VerticalAlignment="Center">
+
+                                <TextBox x:Name="rft" materialDesign:HintAssist.Hint="Residantial Flat type" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="110" Margin="10,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="totco2" materialDesign:HintAssist.Hint="Total Cost" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="110" HorizontalAlignment="Center" Margin="20,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="cft" materialDesign:HintAssist.Hint="Current Flat Status" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Margin="10,10,0,0" Width="110"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="atbpd" materialDesign:HintAssist.Hint="Amount to be paid" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="110" RenderTransformOrigin="0.5,0.5" Margin="10,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="ap" materialDesign:HintAssist.Hint="Amount Paid" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="110" Margin="20,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+                                <TextBox x:Name="dr" materialDesign:HintAssist.Hint="Due Amount" Style="{StaticResource MaterialDesignFloatingHintTextBox}" VerticalAlignment="Center" Width="110" HorizontalContentAlignment="Center" HorizontalAlignment="Center" Margin="20,10,0,0"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" />
+
+
+                            </WrapPanel>
+
+                        </Grid>
+
+                    </materialDesign:Card>
+
+
+                    <DataGrid x:Name="dtm" Height="300" Width="530" VerticalAlignment="Top" HorizontalAlignment="Center" AutoGenerateColumns="False">
+
+                        <DataGrid.Columns>
+
+                            <DataGridTextColumn Header="Mem_no" Width="100" Binding="{Binding Mem_no}"/>
+
+                            <DataGridTextColumn Header="Receipt_no" Width="100" Binding="{Binding Receipt_no}"/>
+
+                            <DataGridTextColumn Header="Receipt_date" Width="100" Binding="{Binding Receipt_date}"/>
+
+                            <DataGridTextColumn Header="Mode_pay" Width="100" Binding="{Binding Mode_pay}"/>
+
+                            <DataGridTextColumn Header="Amount_pay" Width="100" Binding="{Binding Amount_pay}"/>
+
+                            <DataGridTextColumn Header="Bank_name" Width="100" Binding="{Binding Bank_name}"/>
+
+                        </DataGrid.Columns>
+
+                    </DataGrid>
+
+                </StackPanel>
+
+            </Grid>
+        </ScrollViewer>
+
+
+
+
+        <StackPanel Grid.Column="2" Background="White">
+
+            <!--close button-->
+
+            <WrapPanel VerticalAlignment="Top" HorizontalAlignment="Right" Margin="20 20 20 10">
+                <Button Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" RenderTransformOrigin="0.5,0.5" Background="White" BorderBrush="White" Foreground="#FFF5A032" Click="Minmize" Width="40" Height="40">
+                    <materialDesign:PackIcon Kind="WindowMinimize" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" Height="22"/>
+                </Button>
+                <Button Style="{DynamicResource MaterialDesignFloatingActionMiniButton}" materialDesign:ShadowAssist.ShadowDepth="Depth3" RenderTransformOrigin="0.5,0.5" Background="White" BorderBrush="White" Foreground="#FFF5A032" Click="Maximize" Width="40" Height="40" Margin="15,0,0,0">
+                    <materialDesign:PackIcon Kind="Close" VerticalAlignment="Center" HorizontalAlignment="Center" Width="22" Height="22"/>
+                </Button>
+            </WrapPanel>
+            <Border Margin="40,40,40,40" CornerRadius="20" Height="280">
+                <Border.Background>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FFF8DCAB"/>
+                        <GradientStop Color="#FFF59A27" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+
+
+                <!--Member Image-->
+
+
+                <Grid>
+
+                    <Image x:Name="mem7" Source="Images/mem.Png" Stretch="Uniform" Height="200" Width="150"/>
+                    <Image  Stretch="Uniform" x:Name="mimg" Height="230" Width="180" />
+                    <Image x:Name="adimg" Stretch="Uniform" Height="230" Width="180" Visibility="Collapsed"  />
+
+                </Grid>
+
+
+            </Border>
+
+
+
+
+            <WrapPanel Orientation="Horizontal" >
+
+                <!--previous button-->
+
+                <Button Click="prv_Click" x:Name="prv" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" HorizontalAlignment="Left" Margin="14,0,0,0" VerticalAlignment="Bottom"  >
+                    <Button.Background>
+                        <SolidColorBrush Color="#FFFF9800" Opacity="0"/>
+                    </Button.Background>
+                    <materialDesign:PackIcon Kind="ChevronLeft" />
+                </Button>
+
+
+
+                <!--member id-->
+
+                <TextBox x:Name="mid" materialDesign:HintAssist.Hint="Member ID" Text="{Binding ElementName=memno, Path=Text, Mode=TwoWay}" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Width="140" FontSize="22" VerticalAlignment="Stretch" Margin="15,0,0,0" Height="51" HorizontalContentAlignment="Center"  IsReadOnly="{Binding isitReadOnly, UpdateSourceTrigger=PropertyChanged}" MouseWheel="mid_MouseWheel" />
+
+
+
+                <!--next button-->
+
+                <Button x:Name="nxt" Click="nxt_Click" Style="{StaticResource MaterialDesignFloatingActionMiniButton}" VerticalContentAlignment="Center" HorizontalAlignment="Center" Margin="15,0,0,0" VerticalAlignment="Bottom"   >
+                    <Button.Background>
+                        <SolidColorBrush Color="#FFFF9800" Opacity="0"/>
+                    </Button.Background>
+                    <materialDesign:PackIcon Kind="ChevronRight" />
+                </Button>
+            </WrapPanel>
+
+
+
+
+            <!--update button-->
+
+            <StackPanel Orientation="Vertical">
+                <Button x:Name="btnupdate" PreviewMouseLeftButtonDown="btnupdate_Click"
+                        Content="Update Info" IsTabStop="False" IsEnabled="{Binding isItEnabled, UpdateSourceTrigger=PropertyChanged}"
+                        Width="120"  Background="#FFF6F6F8" IsDefault="True" Height="35" Margin="0,51,0,0"  >
+                    <Button.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFF8DCAB"/>
+                            <GradientStop Color="#FFF59A27" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.BorderBrush>
+                </Button>
+
+
+
+
+                <!--delete button-->
+
+
+                <Button x:Name="btndelete" Content="Delete Record" Width="130" Background="#FFF6F6F8" Height="35" Margin="0,20,0,0" Click="btndelete_Click" >
+                    <Button.BorderBrush>
+                        <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                            <GradientStop Color="#FFF8DCAB"/>
+                            <GradientStop Color="#FFF59A27" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Button.BorderBrush>
+                </Button>
+
+
+
+            </StackPanel>
+
+
+        </StackPanel>
+        <TextBlock x:Name="mbrttl" HorizontalAlignment="Left" Text="Members " VerticalAlignment="Top" Height="50" Width="270" FontSize="36" TextAlignment="Center"/>
+    </Grid>
+</UserControl>

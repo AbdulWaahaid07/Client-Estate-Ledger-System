@@ -1,0 +1,6 @@
+C:\Users\waaha\source\repos\CH03\CH03Library\bin\Debug\CH03Library.dll
+C:\Users\waaha\source\repos\CH03\CH03Library\bin\Debug\CH03Library.pdb
+C:\Users\waaha\source\repos\CH03\CH03Library\obj\Debug\CH03Library.csprojAssemblyReference.cache
+C:\Users\waaha\source\repos\CH03\CH03Library\obj\Debug\CH03Library.csproj.CoreCompileInputs.cache
+C:\Users\waaha\source\repos\CH03\CH03Library\obj\Debug\CH03Library.dll
+C:\Users\waaha\source\repos\CH03\CH03Library\obj\Debug\CH03Library.pdb

@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="CH03.Dashboard_ListGrid.CI_LV"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:CH03.Dashboard_ListGrid"
+             mc:Ignorable="d" 
+             d:DesignHeight="680" d:DesignWidth="1200">
+    <Grid Background="White"  >
+
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="3*"/>
+        </Grid.RowDefinitions>
+
+
+        <Grid Grid.Row="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="3*"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0">
+                <TextBlock  HorizontalAlignment="Center"  FontWeight="SemiBold" Text="Contact Information" FontSize="18" VerticalAlignment="Top"/>
+            </Grid>
+            <Grid Grid.Row="1">
+
+                <WrapPanel Orientation="Horizontal" HorizontalAlignment="Center">
+
+
+                    <TextBox x:Name="la1"   materialDesign:HintAssist.Hint="Local Address 1" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="250" HorizontalContentAlignment="Center"  />
+                    <TextBox x:Name="la2"   materialDesign:HintAssist.Hint="Local Address 2" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="250" HorizontalContentAlignment="Center"  />
+                    <TextBox x:Name="la3"   materialDesign:HintAssist.Hint="Local Address 3" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="250" HorizontalContentAlignment="Center"  />
+                    <TextBox x:Name="la4"   materialDesign:HintAssist.Hint="Local Address 4" Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="250" HorizontalContentAlignment="Center"  />
+                    <TextBox x:Name="mno"   materialDesign:HintAssist.Hint="Moblie Number"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="170"  />
+                    <TextBox x:Name="pno"   materialDesign:HintAssist.Hint="Phone Number"    Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="170"  />
+                    <TextBox x:Name="eadrs" materialDesign:HintAssist.Hint="Email Address"   Style="{StaticResource MaterialDesignFloatingHintTextBox}"  Margin="10" VerticalAlignment="Top" Width="170"  />
+
+                </WrapPanel>
+            </Grid>
+
+        </Grid>
+
+
+
+        <Grid Grid.Row="1">
+            <DataGrid x:Name="dtm" HorizontalAlignment="Center" AutoGenerateColumns="False">
+
+                <DataGrid.Columns>
+
+                    <DataGridTextColumn Header="Member Number" Width="100"/>
+
+                    <DataGridTextColumn Header="Member Name" Width="150" />
+
+                    <DataGridTextColumn Header="Moblie Number" Width="100"/>
+
+                    <DataGridTextColumn Header="Phone Number" Width="100" />
+
+                    <DataGridTextColumn Header="Email Address" Width="150"/>
+
+                    <DataGridTextColumn Header="Local Address 1" Width="150"/>
+                    
+                    <DataGridTextColumn Header="Local Address 2" Width="150"/>
+                                                                        
+                    <DataGridTextColumn Header="Local Address 3" Width="150"/>
+                                                                        
+                    <DataGridTextColumn Header="Local Address 4" Width="150"/>
+
+                </DataGrid.Columns>
+
+            </DataGrid>
+
+        </Grid>
+
+
+
+
+
+
+    </Grid>
+</UserControl>

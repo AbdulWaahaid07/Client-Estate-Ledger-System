@@ -1,0 +1,128 @@
+﻿<Window x:Class="CH03.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:local="clr-namespace:CH03"
+        mc:Ignorable="d"
+        Height="680" Width="1200" WindowStartupLocation="CenterScreen"
+        WindowStyle="None" ResizeMode="NoResize" Background="{x:Null}" AllowsTransparency="True" Loaded="Window_Loaded">
+    <Window.Resources>
+        <Storyboard x:Key="CloseMenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="grd1">
+                <EasingDoubleKeyFrame KeyTime="0" Value="320">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="55">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseOut"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+        <Storyboard x:Key="openmenu">
+            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(FrameworkElement.Width)" Storyboard.TargetName="grd1">
+                <EasingDoubleKeyFrame KeyTime="0" Value="55">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+                <EasingDoubleKeyFrame KeyTime="0:0:0.4" Value="320">
+                    <EasingDoubleKeyFrame.EasingFunction>
+                        <QuadraticEase EasingMode="EaseIn"/>
+                    </EasingDoubleKeyFrame.EasingFunction>
+                </EasingDoubleKeyFrame>
+            </DoubleAnimationUsingKeyFrames>
+        </Storyboard>
+    </Window.Resources>
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="ToggleButton.Unchecked" SourceName="tglbtn">
+            <BeginStoryboard Storyboard="{StaticResource CloseMenu}"/>
+        </EventTrigger>
+        <EventTrigger RoutedEvent="ToggleButton.Checked" SourceName="tglbtn">
+            <BeginStoryboard x:Name="openmenu_BeginStoryboard" Storyboard="{StaticResource openmenu}"/>
+        </EventTrigger>
+    </Window.Triggers>
+
+
+    <Grid>
+        <materialDesign:Card Margin="10" UniformCornerRadius="15">
+            <Grid>
+
+                <Grid.Resources>
+                    <Style TargetType="materialDesign:PackIcon">
+                        <Setter Property="Width" Value="30"></Setter>
+                        <Setter Property="Height" Value="30"></Setter>
+                    </Style>
+                </Grid.Resources>
+
+
+                <!--GRID 1-->
+
+
+                <Grid Background="#F6F5F8" x:Name="RenderPages" RenderTransformOrigin="0.5,0.5" Width="1125" HorizontalAlignment="Left" Margin="55,0,0,0">
+
+                </Grid>
+
+
+
+                <!--GRID 2-->
+
+
+                <Grid Name="grd1" Height="680" HorizontalAlignment="Left" Width="55" >
+                    <StackPanel Background="White" >
+                        <Grid Grid.Row="0" Grid.Column="0" Height="150" Width="55" HorizontalAlignment="Left">
+                            <ToggleButton x:Name="tglbtn" Style="{DynamicResource MaterialDesignHamburgerToggleButton}" Height="45" Margin="0,20,0,0" Width="45" HorizontalAlignment="Center" VerticalAlignment="Top"  />
+                        </Grid>
+                        <ListView x:Name="ListViewMenu" Foreground="#FF303336" ScrollViewer.HorizontalScrollBarVisibility="Disabled" SelectionChanged="ListViewMenu_SelectionChanged" Margin="0 15" HorizontalAlignment="Left">
+
+                            <ListViewItem x:Name="Memeber" Height="57" Width="320" Margin="0,0,0,15" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-7,0,0,0">
+                                    <materialDesign:PackIcon Kind="AccountGroup" Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                                    <Label Width="238" HorizontalAlignment="Right" Content="Members" VerticalContentAlignment="Center" FontFamily="Malgun Gothic Semilight" FontSize="25" Padding="8,4,4,4"/>
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="ShareCapital" Height="57" Width="320" Margin="0,0,0,15" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-7,0,0,0">
+                                    <materialDesign:PackIcon Kind="CurrencyUsd" Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Width="238" HorizontalAlignment="Right" Content="Share Capital" VerticalContentAlignment="Center" FontFamily="Malgun Gothic Semilight" FontSize="25" Padding="8,4,4,4"/>
+
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="Flat" Height="57" Width="320" Margin="0,0,0,15" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-7,0,0,0">
+                                    <materialDesign:PackIcon Kind="OfficeBuilding" Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Width="238" HorizontalAlignment="Right" Content="Flat &amp; Appartments" VerticalContentAlignment="Center" FontFamily="Malgun Gothic Semilight" FontSize="25" Padding="8,4,4,4"/>
+
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="Reports" Height="57" Width="320" Margin="0,0,0,15" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-7,0,0,0">
+                                    <materialDesign:PackIcon Kind="FileReport" Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Width="238" HorizontalAlignment="Right" Content="Reports" VerticalContentAlignment="Center" FontFamily="Malgun Gothic Semilight" FontSize="25" Padding="8,4,4,4"/>
+
+                                </StackPanel>
+                            </ListViewItem>
+                            <ListViewItem x:Name="DataBase" Height="57" Width="320" Margin="0,0,0,15" HorizontalAlignment="Left">
+                                <StackPanel Orientation="Horizontal" Height="45" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="-7,0,0,0">
+                                    <materialDesign:PackIcon Kind="Database" Height="30" Width="30" Margin="10" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    <Label Width="238" HorizontalAlignment="Right" Content="Database" VerticalContentAlignment="Center" FontFamily="Malgun Gothic Semilight" FontSize="25" Padding="8,4,4,4"/>
+
+                                </StackPanel>
+                            </ListViewItem>
+
+                        </ListView>
+                    </StackPanel>
+                    <ToggleButton x:Name="usr" Height="40" Width="40" Style="{StaticResource MaterialDesignActionToggleButton}" ToolTip="MaterialDesignActionToggleButton" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="5,0,0,40" >
+                        <Image Source="Images/avatar1.jpg" VerticalAlignment="Bottom" HorizontalAlignment="Left" />
+                    </ToggleButton>
+
+                </Grid>
+
+            </Grid>
+        </materialDesign:Card>
+    </Grid>
+</Window>
